@@ -1,0 +1,147 @@
+[
+  {
+    "id": "case_01",
+    "title": "add() returns incorrect sum for negative numbers",
+    "bug_report": "The add function sometimes returns the wrong value when one of the operands is negative. We need regression tests covering positive, negative, and zero inputs.",
+    "code_snippet": "def add(a, b):\n    \"\"\"Return the sum of two numbers.\"\"\"\n    return a + b",
+    "language": "python",
+    "function_name": "add",
+    "expected_behavior": "add(a, b) returns a + b for all numeric inputs.",
+    "edge_cases": ["negative operands", "zero operands"],
+    "examples": [
+      {"input": [2, 3], "expected": 5},
+      {"input": [-1, 1], "expected": 0},
+      {"input": [0, 0], "expected": 0}
+    ]
+  },
+  {
+    "id": "case_02",
+    "title": "factorial() produces wrong results for n >= 2",
+    "bug_report": "factorial appears to mis-compute values beyond the base cases. Add tests for 0, 1, and larger n.",
+    "code_snippet": "def factorial(n):\n    \"\"\"Return n! for non-negative integers.\"\"\"\n    if n < 0:\n        raise ValueError('n must be >= 0')\n    result = 1\n    for i in range(2, n + 1):\n        result *= i\n    return result",
+    "language": "python",
+    "function_name": "factorial",
+    "expected_behavior": "factorial(n) returns the product of integers 1..n, with factorial(0)=1.",
+    "edge_cases": ["base case 0", "base case 1"],
+    "examples": [
+      {"input": [0], "expected": 1},
+      {"input": [1], "expected": 1},
+      {"input": [5], "expected": 120}
+    ]
+  },
+  {
+    "id": "case_03",
+    "title": "is_palindrome() is case-sensitive and fails mixed case",
+    "bug_report": "is_palindrome fails on inputs like 'Racecar' because it is case sensitive. Tests should verify case-insensitive matching.",
+    "code_snippet": "def is_palindrome(s):\n    \"\"\"Return True if s reads the same forwards and backwards (case-insensitive).\"\"\"\n    s = s.lower()\n    return s == s[::-1]",
+    "language": "python",
+    "function_name": "is_palindrome",
+    "expected_behavior": "is_palindrome(s) returns True when s is a palindrome, ignoring case.",
+    "edge_cases": ["mixed case", "non-palindrome"],
+    "examples": [
+      {"input": ["racecar"], "expected": true},
+      {"input": ["Racecar"], "expected": true},
+      {"input": ["hello"], "expected": false}
+    ]
+  },
+  {
+    "id": "case_04",
+    "title": "fizzbuzz() returns malformed sequence",
+    "bug_report": "fizzbuzz should return a list of strings 1..n with Fizz/Buzz substitution. Verify the first 5 values.",
+    "code_snippet": "def fizzbuzz(n):\n    \"\"\"Return list of FizzBuzz strings for 1..n.\"\"\"\n    out = []\n    for i in range(1, n + 1):\n        if i % 15 == 0:\n            out.append('FizzBuzz')\n        elif i % 3 == 0:\n            out.append('Fizz')\n        elif i % 5 == 0:\n            out.append('Buzz')\n        else:\n            out.append(str(i))\n    return out",
+    "language": "python",
+    "function_name": "fizzbuzz",
+    "expected_behavior": "fizzbuzz(n) returns the classic FizzBuzz sequence as a list of strings.",
+    "edge_cases": ["multiples of 3", "multiples of 5", "multiples of 15"],
+    "examples": [
+      {"input": [5], "expected": ["1", "2", "Fizz", "4", "Buzz"]}
+    ]
+  },
+  {
+    "id": "case_05",
+    "title": "reverse_string() breaks on empty input",
+    "bug_report": "reverse_string should handle empty strings gracefully instead of throwing.",
+    "code_snippet": "def reverse_string(s):\n    \"\"\"Return s reversed.\"\"\"\n    return s[::-1]",
+    "language": "python",
+    "function_name": "reverse_string",
+    "expected_behavior": "reverse_string(s) returns the reversed string; empty input returns empty string.",
+    "edge_cases": ["empty string"],
+    "examples": [
+      {"input": ["hello"], "expected": "olleh"},
+      {"input": [""], "expected": ""}
+    ]
+  },
+  {
+    "id": "case_06",
+    "title": "max_of_list() crashes on empty list",
+    "bug_report": "max_of_list should raise a clear error on empty input rather than returning None silently.",
+    "code_snippet": "def max_of_list(lst):\n    \"\"\"Return the maximum value in lst, raising ValueError if empty.\"\"\"\n    if not lst:\n        raise ValueError('empty list')\n    m = lst[0]\n    for x in lst[1:]:\n        if x > m:\n            m = x\n    return m",
+    "language": "python",
+    "function_name": "max_of_list",
+    "expected_behavior": "max_of_list(lst) returns the largest element; raises ValueError on empty input.",
+    "edge_cases": ["empty list", "all-negative list"],
+    "examples": [
+      {"input": [[1, 5, 3]], "expected": 5},
+      {"input": [[-2, -1]], "expected": -1}
+    ]
+  },
+  {
+    "id": "case_07",
+    "title": "count_vowels() misses uppercase vowels",
+    "bug_report": "count_vowels should be case-insensitive but currently only counts lowercase.",
+    "code_snippet": "def count_vowels(s):\n    \"\"\"Return number of vowels in s (case-insensitive).\"\"\"\n    return sum(1 for c in s.lower() if c in 'aeiou')",
+    "language": "python",
+    "function_name": "count_vowels",
+    "expected_behavior": "count_vowels(s) counts all vowels ignoring case.",
+    "edge_cases": ["no vowels", "all uppercase"],
+    "examples": [
+      {"input": ["hello"], "expected": 2},
+      {"input": ["rhythm"], "expected": 0},
+      {"input": ["AEIOU"], "expected": 5}
+    ]
+  },
+  {
+    "id": "case_08",
+    "title": "fib() returns off-by-one sequence",
+    "bug_report": "fib(n) should follow fib(0)=0, fib(1)=1. Confirm correctness up to fib(10).",
+    "code_snippet": "def fib(n):\n    \"\"\"Return the n-th Fibonacci number (fib(0)=0, fib(1)=1).\"\"\"\n    if n < 0:\n        raise ValueError('n must be >= 0')\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a",
+    "language": "python",
+    "function_name": "fib",
+    "expected_behavior": "fib(n) returns the n-th Fibonacci number with fib(0)=0.",
+    "edge_cases": ["base case 0", "base case 1"],
+    "examples": [
+      {"input": [0], "expected": 0},
+      {"input": [1], "expected": 1},
+      {"input": [10], "expected": 55}
+    ]
+  },
+  {
+    "id": "case_09",
+    "title": "get_initials() drops middle names",
+    "bug_report": "get_initials should produce initials for every word in a multi-part name.",
+    "code_snippet": "def get_initials(name):\n    \"\"\"Return uppercase initials of a space-separated name.\"\"\"\n    return ''.join(part[0].upper() for part in name.split() if part)",
+    "language": "python",
+    "function_name": "get_initials",
+    "expected_behavior": "get_initials(name) returns the uppercase first letter of each whitespace-separated word.",
+    "edge_cases": ["three-part name", "extra spaces"],
+    "examples": [
+      {"input": ["john doe"], "expected": "JD"},
+      {"input": ["alice bob carol"], "expected": "ABC"}
+    ]
+  },
+  {
+    "id": "case_10",
+    "title": "clamp() returns values outside the range",
+    "bug_report": "clamp(x, lo, hi) should bound x into [lo, hi]. Add tests for below, within, and above the range.",
+    "code_snippet": "def clamp(x, lo, hi):\n    \"\"\"Clamp x into the inclusive range [lo, hi].\"\"\"\n    if lo > hi:\n        raise ValueError('lo must be <= hi')\n    return max(lo, min(hi, x))",
+    "language": "python",
+    "function_name": "clamp",
+    "expected_behavior": "clamp(x, lo, hi) returns lo if x<lo, hi if x>hi, else x.",
+    "edge_cases": ["below range", "above range", "inverted bounds"],
+    "examples": [
+      {"input": [5, 0, 10], "expected": 5},
+      {"input": [-1, 0, 10], "expected": 0},
+      {"input": [100, 0, 10], "expected": 10}
+    ]
+  }
+]
